@@ -7,23 +7,33 @@
 
 import UIKit
 
-class BenefitsViewController: UIViewController {
-
+class BenefitsViewController: UIViewController, UISearchResultsUpdating {
+    
+    let searchController: UISearchController = {
+        //Create new view controller to show results
+        let results = UIViewController()
+        let vc = UISearchController(searchResultsController: results)
+        vc.searchBar.placeholder = "Search for coupons"
+        vc.searchBar.searchBarStyle = .minimal
+        vc.definesPresentationContext = true
+        return vc
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        title = "Benefits"
+        view.backgroundColor = .systemBackground
+        //Displays search controller
+        navigationItem.searchController = searchController
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func updateSearchResults(for searchController: UISearchController) {
+        //if search field only consists of spaces or nothing
+        guard let query  = searchController.searchBar.text,
+              !query.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return
+        }
     }
-    */
-
+    
+    
 }
